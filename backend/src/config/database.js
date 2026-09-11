@@ -1,19 +1,37 @@
 const { Pool } = require("pg");
 
+const DATABASE_URL = process.env.DATABASE_URL;
+
+function shouldUseSsl() {
+  if (process.env.DATABASE_SSL === "true") {
+    return true;
+  }
+  if (!DATABASE_URL) {
+    return false;
+  }
+  return /(?:[?&])(?:sslmode=(?:require|verify|verify-ca|verify-full)|ssl=true)/i.test(DATABASE_URL);
+}
+
 let pool = null;
 
 function initPool() {
-  if (!process.env.DATABASE_URL) {
+  if (!DATABASE_URL) {
     console.warn("[database] DATABASE_URL absent — la connexion PostgreSQL n'est pas initialisée.");
     return null;
   }
 
-  pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
+  const config = {
+    connectionString: DATABASE_URL,
     max: 10,
     idleTimeoutMillis: 30000,
     connectionTimeoutMillis: 5000,
-  });
+  };
+
+  if (shouldUseSsl()) {
+    config.ssl = { rejectUnauthorized: false };
+  }
+
+  pool = new Pool(config);
 
   pool.on("error", (err) => {
     console.error("[database] Erreur inattendue du pool PostgreSQL :", err.message);
