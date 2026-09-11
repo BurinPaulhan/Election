@@ -30,6 +30,10 @@ function isAllowedOrigin(origin, callback) {
 
 app.disable("x-powered-by");
 
+// Render (et les autres proxies) fournissent X-Forwarded-For : requis pour
+// l'identification IP correcte par express-rate-limit derrière un proxy.
+app.set("trust proxy", 1);
+
 app.use(
   cors({
     origin: isAllowedOrigin,
