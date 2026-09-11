@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import './admin.css'
 
-const API = import.meta.env.VITE_API_URL || 'http://localhost:3000'
+const API = import.meta.env.VITE_API_URL || 'https://campaignaema.onrender.com'
 
 function apiFetch(path, { token, method = 'GET', body } = {}) {
   const headers = { 'Content-Type': 'application/json' }
