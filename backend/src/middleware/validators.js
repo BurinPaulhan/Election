@@ -26,14 +26,14 @@ function validateContactMessage(body) {
   if (nom.length > MAX_NOM) {
     throw new ApiError(400, "Le nom ne doit pas dépasser 100 caractères.");
   }
-  if (!email) {
-    throw new ApiError(400, "L'adresse e-mail est requise.");
-  }
-  if (email.length > MAX_EMAIL) {
-    throw new ApiError(400, "L'adresse e-mail est trop longue.");
-  }
-  if (!EMAIL_RE.test(email)) {
-    throw new ApiError(400, "L'adresse e-mail est invalide.");
+  // Email facultatif : s'il est renseigné, il doit être valide et raisonnable.
+  if (email) {
+    if (email.length > MAX_EMAIL) {
+      throw new ApiError(400, "L'adresse e-mail est trop longue.");
+    }
+    if (!EMAIL_RE.test(email)) {
+      throw new ApiError(400, "L'adresse e-mail est invalide.");
+    }
   }
   if (!message) {
     throw new ApiError(400, "Votre message est requis.");

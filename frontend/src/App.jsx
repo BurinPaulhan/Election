@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import Header from './components/Header'
 import Footer from './components/Footer'
+import BackToTop from './components/BackToTop'
 import Hero from './sections/Hero'
 import About from './sections/About'
 import Vision from './sections/Vision'
@@ -47,6 +48,7 @@ function App() {
     <Header isMenuOpen={isMenuOpen} onMenuToggle={() => setIsMenuOpen((open) => !open)} onNavigate={closeMenu} />
     <main id="contenu"><Hero /><About /><Vision /><Programme /><Priorites /><Equipe /><Engagements /><Actualites /><Contact /></main>
     <Footer />
+    <BackToTop />
   </>
 }
 

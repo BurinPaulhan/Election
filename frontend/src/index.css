@@ -634,8 +634,41 @@ html.has-scroll-reveal .is-revealed .team-member:nth-child(5) { animation-delay:
 }
 .footer-inner { display: flex; flex-direction: column; align-items: center; gap: 10px; }
 .footer-slogan { margin: 0; display: flex; align-items: center; font-family: var(--font-display); font-size: var(--text-base); font-weight: 600; letter-spacing: -.01em; color: var(--foreground); }
-.footer-quote-icon { flex: none; align-self: flex-start; width: 2.4em; height: 2.4em; margin-top: .1em; margin-right: 2px; color: var(--primary); }
+.footer-quote-icon { flex: none; align-self: flex-start; width: 2.4em; height: 2.4em; margin-top: -.4em; margin-right: 2px; color: var(--primary); }
 .footer-copyright { margin: 0; font-size: var(--text-sm); color: var(--muted-foreground); }
+
+.back-to-top {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 6;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: var(--card);
+  color: var(--primary);
+  box-shadow: var(--shadow-card);
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition: opacity var(--duration) var(--ease), transform var(--duration) var(--ease), border-color var(--duration) var(--ease), visibility 0s linear var(--duration);
+}
+.back-to-top.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+  transition-delay: 0ms, 0ms, 0ms;
+}
+.back-to-top:hover { border-color: var(--primary); }
+.back-to-top:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.back-to-top svg { width: 20px; height: 20px; }
 
 @keyframes status-enter { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }

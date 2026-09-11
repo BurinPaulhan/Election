@@ -107,7 +107,26 @@ async function run() {
   const target = insertedInDb.rows[0]?.id;
 
   // ------------------------------------------------------------
-  // 3. POST /api/messages — email invalide
+  // 4. POST /api/messages — email vide (facultatif)
+  // ------------------------------------------------------------
+  const noEmail = await api("POST", "/api/messages", {
+    body: { nom: "Sans Email", message: "Message sans adresse e-mail." },
+  });
+  record("POST /api/messages email vide → 201", noEmail.status === 201 && noEmail.data.success === true);
+  const noEmailInDb = await db.query(
+    "SELECT id, email FROM messages WHERE nom = $1 ORDER BY id DESC LIMIT 1",
+    ["Sans Email"]
+  );
+  record(
+    "Email vide enregistré comme chaîne vide",
+    noEmailInDb.rowCount === 1 && noEmailInDb.rows[0].email === ""
+  );
+  if (noEmailInDb.rowCount === 1) {
+    insertedMessageIds.push(noEmailInDb.rows[0].id);
+  }
+
+  // ------------------------------------------------------------
+  // 5. POST /api/messages — email invalide
   // ------------------------------------------------------------
   const badEmail = await api("POST", "/api/messages", {
     body: { email: "pas-un-email", message: "Test email invalide" },
@@ -115,7 +134,7 @@ async function run() {
   record("POST /api/messages email invalide → 400", badEmail.status === 400 && badEmail.data.success === false);
 
   // ------------------------------------------------------------
-  // 4. POST /api/messages — message vide
+  // 6. POST /api/messages — message vide
   // ------------------------------------------------------------
   const empty = await api("POST", "/api/messages", {
     body: { email: "jean@example.com", message: "   " },
@@ -123,7 +142,7 @@ async function run() {
   record("POST /api/messages message vide → 400", empty.status === 400 && empty.data.success === false);
 
   // ------------------------------------------------------------
-  // 5. POST /api/admin/login — mauvais mot de passe
+  // 7. POST /api/admin/login — mauvais mot de passe
   // ------------------------------------------------------------
   const wrongLogin = await api("POST", "/api/admin/login", {
     body: { email: testAdminEmail, password: "mauvais-mot-de-passe" },
@@ -135,13 +154,13 @@ async function run() {
   );
 
   // ------------------------------------------------------------
-  // 6. GET /api/admin/messages — sans authentification
+  // 8. GET /api/admin/messages — sans authentification
   // ------------------------------------------------------------
   const noAuth = await api("GET", "/api/admin/messages");
   record("GET /api/admin/messages sans auth → 401", noAuth.status === 401);
 
   // ------------------------------------------------------------
-  // 7. POST /api/admin/login — bons identifiants
+  // 9. POST /api/admin/login — bons identifiants
   // ------------------------------------------------------------
   const goodLogin = await api("POST", "/api/admin/login", {
     body: { email: testAdminEmail, password: TEST_ADMIN_PASSWORD },
@@ -150,7 +169,7 @@ async function run() {
   const token = goodLogin.data.token;
 
   // ------------------------------------------------------------
-  // 8. GET /api/admin/messages — avec authentification
+  // 10. GET /api/admin/messages — avec authentification
   // ------------------------------------------------------------
   const list = await api("GET", "/api/admin/messages", { token });
   record("GET /api/admin/messages avec auth → 200", list.status === 200 && Array.isArray(list.data.messages));
@@ -161,25 +180,25 @@ async function run() {
   record("Le message inséré est en statut UNREAD", list.data.unreadCount >= 1);
 
   // ------------------------------------------------------------
-  // 9. GET /api/admin/messages/:id
+  // 11. GET /api/admin/messages/:id
   // ------------------------------------------------------------
   const one = await api("GET", `/api/admin/messages/${target}`, { token });
   record("GET /api/admin/messages/:id → 200", one.status === 200 && one.data.message.id === target);
 
   // ------------------------------------------------------------
-  // 10. PATCH /api/admin/messages/:id/read
+  // 12. PATCH /api/admin/messages/:id/read
   // ------------------------------------------------------------
   const read = await api("PATCH", `/api/admin/messages/${target}/read`, { token });
   record("PATCH /read → 200 + statut READ", read.status === 200 && read.data.message.statut === "READ");
 
   // ------------------------------------------------------------
-  // 11. PATCH /api/admin/messages/:id/unread
+  // 13. PATCH /api/admin/messages/:id/unread
   // ------------------------------------------------------------
   const unread = await api("PATCH", `/api/admin/messages/${target}/unread`, { token });
   record("PATCH /unread → 200 + statut UNREAD", unread.status === 200 && unread.data.message.statut === "UNREAD");
 
   // ------------------------------------------------------------
-  // 12. DELETE /api/admin/messages/:id + vérification PostgreSQL
+  // 14. DELETE /api/admin/messages/:id + vérification PostgreSQL
   // ------------------------------------------------------------
   const del = await api("DELETE", `/api/admin/messages/${target}`, { token });
   const stillThere = await db.query("SELECT id FROM messages WHERE id = $1", [target]);
@@ -187,7 +206,7 @@ async function run() {
   record("Message effectivement supprimé de PostgreSQL", stillThere.rowCount === 0);
 
   // ------------------------------------------------------------
-  // 13. POST /api/messages — flush propre : le "delete" interdit côté admin
+  // 15. POST /api/messages — flush propre : le "delete" interdit côté admin
   //     (tous les messages de test sont consignés dans insertedMessageIds)
   // ------------------------------------------------------------
 }

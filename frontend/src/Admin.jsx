@@ -235,7 +235,7 @@ function Dashboard({ token, admin, onLogout }) {
                       <div className="message-item-header">
                         {m.statut === 'UNREAD' && <span className="dot" aria-label="Non lu" />}
                         <strong>{m.nom || 'Anonyme'}</strong>
-                        <span className="email">{m.email}</span>
+                        <span className="email">{m.email || 'Non renseigné'}</span>
                       </div>
                       <div className="message-snippet">{m.message}</div>
                     </div>
@@ -270,7 +270,7 @@ function MessageDetail({ message, loading, onBack, onToggleRead, onDelete }) {
       <div className="detail-top">
         <div className="detail-meta">
           <span className="from">{message.nom || 'Anonyme'}</span>
-          <span className="email">{message.email}</span>
+          <span className="email">{message.email || 'Non renseigné'}</span>
           <span className="date">{formatDate(message.created_at)}</span>
         </div>
         <div className="detail-actions">
