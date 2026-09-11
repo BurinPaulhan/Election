@@ -16,11 +16,23 @@ const allowedOrigins = (process.env.FRONTEND_URL || "http://localhost:5173")
   .map((origin) => origin.trim())
   .filter(Boolean);
 
+// Autorise les origines explicites (FRONTEND_URL), les previews/déploiements
+// Vercel (*.vercel.app) et le développement local — les requêtes sans en-tête
+// Origin (curl, health checks) sont également acceptées.
+function isAllowedOrigin(origin, callback) {
+  const allowed =
+    !origin ||
+    allowedOrigins.includes(origin) ||
+    /\.vercel\.app$/.test(origin) ||
+    /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin);
+  callback(null, allowed);
+}
+
 app.disable("x-powered-by");
 
 app.use(
   cors({
-    origin: allowedOrigins,
+    origin: isAllowedOrigin,
     methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
