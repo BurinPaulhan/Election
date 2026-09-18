@@ -3,10 +3,10 @@ import Header from './components/Header'
 import Footer from './components/Footer'
 import BackToTop from './components/BackToTop'
 import Hero from './sections/Hero'
+import BanniereCandidature from './sections/BanniereCandidature'
 import About from './sections/About'
-import Vision from './sections/Vision'
 import Programme from './sections/Programme'
-import Priorites from './sections/Priorites'
+import Projets from './sections/Projets'
 import Equipe from './sections/Equipe'
 import Engagements from './sections/Engagements'
 import Actualites from './sections/Actualites'
@@ -46,7 +46,7 @@ function App() {
   return <>
     <a className="skip-link" href="#contenu">Aller au contenu principal</a>
     <Header isMenuOpen={isMenuOpen} onMenuToggle={() => setIsMenuOpen((open) => !open)} onNavigate={closeMenu} />
-    <main id="contenu"><Hero /><About /><Vision /><Programme /><Priorites /><Equipe /><Engagements /><Actualites /><Contact /></main>
+    <main id="contenu"><Hero /><BanniereCandidature /><About /><Programme /><Projets /><Equipe /><Engagements /><Actualites /><Contact /></main>
     <Footer />
     <BackToTop />
   </>

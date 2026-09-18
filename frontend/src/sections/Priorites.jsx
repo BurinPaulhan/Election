@@ -1,3 +1,0 @@
-const projetsPrioritaires = ['Guide du nouvel arrivant', 'Fonds de solidarité', 'AEMA Académie', 'AEMA Sport & Culture', 'AEMA numérique']
-function Priorites() { return <section className="section priorities-section" aria-labelledby="priorities-title"><div className="container"><div className="section-heading"><p className="eyebrow">Pour commencer</p><h2 id="priorities-title">Cinq priorités pour rendre la candidature concrète.</h2></div><ol className="priorities-list">{projetsPrioritaires.map((project, index) => <li key={project}><span>0{index + 1}</span><h3>{project}</h3></li>)}</ol></div></section> }
-export default Priorites

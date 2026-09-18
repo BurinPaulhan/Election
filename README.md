@@ -8,7 +8,7 @@ Application web de présentation de l'équipe candidate
 - `frontend/` — Interface utilisateur
 - `backend/` — API et logique métier
 - `database/` — Base de données PostgreSQL
-- `docs/` — Documentation du projet
+- `docs/` — Documentation du projet (voir `docs/PRODUCTION.md` pour la mise en ligne)
 
 ## Technologies
 
