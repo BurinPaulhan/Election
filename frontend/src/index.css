@@ -540,7 +540,8 @@ html.has-scroll-reveal .is-revealed .projet-media { animation-delay: 180ms; }
 }
 .team-member > div { padding-top: 10px; margin-top: 12px; }
 .team-role { margin: 0; color: var(--primary); font-size: .625rem; }
-.team-member h3 { margin: 5px 0 3px; font-size: var(--text-sm); }
+.team-member h3 { margin: 5px 0 3px; font-size: var(--text-sm); overflow-wrap: break-word; }
+.team-formation { margin: 0; color: var(--muted-foreground); font-size: .8125rem; line-height: 1.5; }
 .team-member p:last-child { margin: 0; color: var(--muted-foreground); font-size: var(--text-xs); line-height: 1.5; }
 .team-note { margin: 28px 0 0; }
 
