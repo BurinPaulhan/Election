@@ -53,7 +53,7 @@ function App() {
   return <>
     <a className="skip-link" href="#contenu">Aller au contenu principal</a>
     <Header isMenuOpen={isMenuOpen} onMenuToggle={() => setIsMenuOpen((open) => !open)} onNavigate={closeMenu} theme={theme} onThemeToggle={toggleTheme} />
-    <main id="contenu"><Hero /><BanniereCandidature /><About /><Programme /><Projets /><Equipe /><Engagements /><Actualites /><Contact /></main>
+    <main id="contenu"><Hero /><BanniereCandidature /><About /><Programme /><Projets /><Equipe /><Actualites /><Contact /></main>
     <Footer />
     <BackToTop />
   </>
