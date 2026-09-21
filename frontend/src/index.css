@@ -1269,17 +1269,34 @@ mask-image: linear-gradient(
   min-height: 0;
   padding: var(--space-7);
   overflow: hidden;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(var(--primary-rgb), .06), transparent 46%),
+    rgba(255, 255, 255, .025);
+}
+.viewer-stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, .025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, .025) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: radial-gradient(circle at center, rgba(0, 0, 0, .9), transparent 78%);
+  -webkit-mask-image: radial-gradient(circle at center, rgba(0, 0, 0, .9), transparent 78%);
+  pointer-events: none;
 }
 .viewer-stage img {
+  position: relative;
   display: block;
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
+  box-shadow: var(--shadow-card);
   animation: viewer-fade var(--duration-slow) var(--ease) both;
 }
 @keyframes viewer-fade {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from { opacity: 0; transform: scale(.995); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 /* Volet latéral : informations + téléchargement */
@@ -1393,4 +1410,13 @@ mask-image: linear-gradient(
   .viewer-action--close { width: 42px; }
   .viewer-stage img { max-height: 58vh; }
   .viewer-count { font-size: var(--text-xs); }
+}
+
+/* Accessibilité : réduire les animations si l'utilisateur le demande */
+@media (prefers-reduced-motion: reduce) {
+  .viewer,
+  .viewer-stage img {
+    animation: none !important;
+    transition: none !important;
+  }
 }

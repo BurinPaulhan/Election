@@ -31,7 +31,7 @@ const publications = [
     id: 'parcours',
     src: parcoursImg,
     category: 'Parcours',
-    date: '21 septembre 2026',
+    date: '20 septembre 2026',
     title: 'Le parcours, pas à pas',
     excerpt: 'Un chemin construit autour des étudiants : de l’engagement associatif à la prise de responsabilités.',
     file: 'parcours.png',
