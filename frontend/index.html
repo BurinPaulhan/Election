@@ -9,7 +9,20 @@
     <meta property="og:description" content="Une candidature pour une AEMA plus proche des étudiants, plus structurée et tournée vers l’action." />
     <meta property="og:type" content="website" />
     <title>Arphax Thierry Razafimahavy — Candidat à la présidence de l’AEMA</title>
-  </head>
+        <script>
+      ;(function () {
+        try {
+          var t = localStorage.getItem('aema-theme')
+          if (t !== 'light' && t !== 'dark') {
+            t = 'dark'
+          }
+          document.documentElement.setAttribute('data-theme', t)
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'dark')
+        }
+      })()
+    </script>
+</head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>

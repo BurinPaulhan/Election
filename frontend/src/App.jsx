@@ -16,6 +16,13 @@ function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const closeMenu = () => setIsMenuOpen(false)
 
+  const [theme, setTheme] = useState(() => document.documentElement.getAttribute('data-theme') || 'dark')
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme)
+    try { localStorage.setItem('aema-theme', theme) } catch (e) { /* stockage indisponible */ }
+  }, [theme])
+  const toggleTheme = () => setTheme((t) => (t === 'dark' ? 'light' : 'dark'))
+
   useEffect(() => {
     const sections = document.querySelectorAll('main > section')
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -45,7 +52,7 @@ function App() {
 
   return <>
     <a className="skip-link" href="#contenu">Aller au contenu principal</a>
-    <Header isMenuOpen={isMenuOpen} onMenuToggle={() => setIsMenuOpen((open) => !open)} onNavigate={closeMenu} />
+    <Header isMenuOpen={isMenuOpen} onMenuToggle={() => setIsMenuOpen((open) => !open)} onNavigate={closeMenu} theme={theme} onThemeToggle={toggleTheme} />
     <main id="contenu"><Hero /><BanniereCandidature /><About /><Programme /><Projets /><Equipe /><Engagements /><Actualites /><Contact /></main>
     <Footer />
     <BackToTop />
